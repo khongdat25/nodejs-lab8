@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tất cả món Nhật - Sushi House</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #fdfafa; color: #333; }
+
+        /* Header cố định */
+        header {
+            background: #c41e3a;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            height: 70px;
+        }
+        .logo { font-size: 28px; font-weight: bold; text-decoration: none; color: white; }
+        .logo span { color: #ffeb3b; }
+        .menu a { color: white; text-decoration: none; margin: 0 20px; font-weight: 500; }
+        .menu a:hover { color: #ffeb3b; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .search-box { position: relative; }
+        .search-box input {
+            padding: 10px 40px 10px 15px;
+            border: none;
+            border-radius: 30px;
+            width: 250px;
+        }
+        .search-box i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .login-btn {
+            background: #ffeb3b;
+            color: #c41e3a;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logo { font-size: 28px; font-weight: bold; color: white; text-decoration: none; }
+        .logo span { color: #ffeb3b; }
+        .menu a { color: white; text-decoration: none; margin: 0 20px; font-weight: 500; }
+        .menu a:hover { color: #ffeb3b; }
+
+        /* Main layout */
+        main { margin-top: 90px; padding: 40px 5%; display: flex; gap: 40px; max-width: 1400px; margin-left: auto; margin-right: auto; }
+
+        /* Sidebar lọc */
+        .sidebar-filter {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        .filter-box {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .filter-title {
+            font-size: 20px;
+            color: #c41e3a;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #ffeb3b;
+            padding-bottom: 10px;
+        }
+
+        /* Tìm kiếm */
+        .search-filter {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .search-filter input {
+            width: 100%;
+            padding: 14px 45px 14px 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+        .search-filter i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #c41e3a;
+        }
+
+        /* Danh mục */
+        .category-list label {
+            display: block;
+            padding: 12px 0;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+        .category-list label:hover {
+            color: #c41e3a;
+            padding-left: 8px;
+        }
+        .category-list input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #c41e3a;
+        }
+
+        /* Bộ lọc giá */
+        .price-range {
+            margin: 20px 0;
+        }
+        .price-inputs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .price-inputs input {
+            width: 100%;
+            padding: 10px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .price-range-slider {
+            
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            margin: 20px 0;
+        }
+        .price-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #c41e3a;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn-filter {
+            width: 100%;
+            padding: 14px;
+            background: #c41e3a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn-filter:hover { background: #a1172d; }
+
+        /* Danh sách sản phẩm */
+        .product-list {
+            flex: 1;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .result-count { color: #666; font-size: 16px; }
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+        }
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+        .product-card:hover .product-img img { transform: scale(1.12); }
+        .product-info {
+            padding: 18px;
+            text-align: center;
+        }
+        .product-info h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+            height: 50px;
+            overflow: hidden;
+            display: -webkit-box;
+            
+            -webkit-box-orient: vertical;
+        }
+        .price {
+            font-size: 22px;
+            color: #c41e3a;
+            font-weight: bold;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 15px;
+            margin-left: 8px;
+        }
+        .btn-add {
+            margin-top: 12px;
+            width: 100%;
+            padding: 12px;
+            background: #c41e3a;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-add:hover { background: #a1172d; }
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #ffeb3b;
+            color: #c41e3a;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        @media (max-width: 992px) {
+            main { flex-direction: column; }
+            .sidebar-filter { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">Giao hàng miễn phí nội thành với đơn từ 300.000đ</div>
+        <nav>
+            <a href="#" class="logo">Sushi<span>House</span></a>
+            <div class="menu">
+                <a href="/Views/Home.html">Trang chủ</a>
+                <a href="/Views/product.html">Sản phẩm</a>
+                <a href="#">Khuyến mãi</a>
+                <a href="#">Tin tức</a>
+                <a href="#">Liên hệ</a>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm món Nhật ngon...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <a href="#" class="login-btn">Đăng nhập</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Bộ lọc bên trái -->
+        <aside class="sidebar-filter">
+            <div class="filter-box">
+                <h3 class="filter-title">Tìm kiếm món ăn</h3>
+                <div class="search-filter">
+                    <input type="text" placeholder="Tìm món Nhật..." id="searchInput">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="filter-box">
+                <h3 class="filter-title">Danh mục</h3>
+                <div class="category-list">
+                    <label><input type="checkbox" value="sushi"> Sushi & Maki</label>
+                    <label><input type="checkbox" value="sashimi"> Sashimi</label>
+                    <label><input type="checkbox" value="ramen"> Ramen & Udon</label>
+                    <label><input type="checkbox" value="tempura"> Tempura & Chiên</label>
+                    <label><input type="checkbox" value="rice"> Cơm & Donburi</label>
+                    <label><input type="checkbox" value="salad"> Salad Nhật</label>
+                    <label><input type="checkbox" value="dessert"> Tráng miệng</label>
+                    <label><input type="checkbox" value="drink"> Đồ uống</label>
+                </div>
+            </div>
+
+            <div class="filter-box">
+                <h3 class="filter-title">Khoảng giá</h3>
+                <div class="price-range">
+                    <input type="range" class="price-range-slider" min="0" max="1000000" value="500000">
+                    <div class="price-inputs">
+                        <input type="text" value="0đ" readonly>
+                        <span>-</span>
+                        <input type="text" value="500.000đ" readonly>
+                    </div>
+                </div>
+                <button class="btn-filter">Áp dụng lọc</button>
+            </div>
+        </aside>
+
+        <!-- Danh sách sản phẩm bên phải -->
+        <section class="product-list">
+            <div class="top-bar">
+                <div class="result-count">Hiển thị <strong>48</strong> món Nhật ngon nhất</div>
+                <select class="sort-select">
+                    <option>Mới nhất</option>
+                    <option>Giá: Thấp → Cao</option>
+                    <option>Giá: Cao → Thấp</option>
+                    <option>Bán chạy nhất</option>
+                </select>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Sản phẩm được render bằng JS -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Dữ liệu mẫu 20 món
+        const products = [
+            { name: "Salmon Aburi Mentai", price: 219000, oldPrice: 280000, img: "https://images.unsplash.com/photo-1623379914807-20a8a9e4e2d5?q=80&w=800", badge: "HOT" },
+            { name: "Sashimi Tổng Hợp Cao Cấp", price: 459000, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=800" },
+            { name: "Ramen Tonkotsu Truyền Thống", price: 149000, img: "https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=800" },
+            { name: "Unagi Don - Lươn Nướng", price: 299000, img: "https://images.unsplash.com/photo-1634214677453-9b37885f0d9a?q=80&w=800", badge: "NEW" },
+            { name: "Volcano Roll", price: 239000, img: "https://images.unsplash.com/photo-1613843873231-1447db182bf7?q=80&w=800", badge: "BÁN CHẠY" },
+            { name: "Takoyaki Bạch Tuộc", price: 89000, img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=800" },
+            { name: "Tempura Tôm Sú", price: 179000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1625937283075-a20e1a4f4a6d?q=80&w=800", badge: "-20%" },
+            { name: "Mochi Kem 4 Vị", price: 99000, img: "https://images.unsplash.com/photo-1623341214825-9f4f5717cbbb?q=80&w=800", badge: "LIMITED" },
+            { name: "Katsu Curry Nhật Bản", price: 179000, img: "https://images.unsplash.com/photo-1598970535080-9f9d66d4e0c5?q=80&w=800" },
+            { name: "Sushi Cá Hồi NaUy", price: 189000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800" },
+            // Thêm bao nhiêu món cũng được...
+        ];
+
+        const formatPrice = (p) => p.toLocaleString('vi-VN') + 'đ';
+
+        const createCard = (p) => {
+            const oldPrice = p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : '';
+            const badge = p.badge ? `<div class="badge">${p.badge}</div>` : '';
+            return `
+                <div class="product-card">
+                    ${badge}
+                    <div class="product-img">
+                        <img src="${p.img}" alt="${p.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3>${p.name}</h3>
+                        <p class="price">${formatPrice(p.price)} ${oldPrice}</p>
+                        <button class="btn-add">Thêm vào giỏ</button>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Render tất cả sản phẩm
+        document.getElementById('productsGrid').innerHTML = products.map(createCard).join('');
+
+        // Tìm kiếm nhanh
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            document.getElementById('productsGrid').innerHTML = filtered.map(createCard).join('');
+        });
+    </script>
+</body>
+</html>

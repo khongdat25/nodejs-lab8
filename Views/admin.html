@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sushi House</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; color: #333; display: flex; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: #c41e3a;
+            color: white;
+            padding: 30px 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+        .logo-admin {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+        .logo-admin span { color: #ffeb3b; }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .menu-item i { margin-right: 15px; font-size: 20px; width: 30px; text-align: center; }
+        .menu-item:hover { background: #a1172d; transform: translateX(8px); }
+        .menu-item.active {
+            background: #ffeb3b;
+            color: #c41e3a;
+            font-weight: bold;
+            transform: translateX(8px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+        }
+        .header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-size: 28px; color: #c41e3a; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: #ffeb3b; color: #c41e3a; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
+
+        /* Content Area */
+        .content-area { display: none; }
+        .content-area.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .stat-icon {
+            width: 70px; height: 70px; border-radius: 16px; margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center; font-size: 32px; color: white;
+        }
+        .stat-card:nth-child(1) .stat-icon { background: #c41e3a; }
+        .stat-card:nth-child(2) .stat-icon { background: #ff6b6b; }
+        .stat-card:nth-child(3) .stat-icon { background: #4ecdc4; }
+        .stat-card:nth-child(4) .stat-icon { background: #45b7d1; }
+        .stat-card h3 { font-size: 32px; font-weight: bold; margin: 10px 0; }
+        .stat-card p { color: #666; }
+
+        /* Table chung */
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td { padding: 18px 25px; text-align: left; }
+        th { background: #c41e3a; color: white; }
+        tr:nth-child(even) { background: #fdfafa; }
+        tr:hover { background: #fff0f0; }
+        .status { padding: 8px 16px; border-radius: 30px; font-weight: bold; font-size: 13px; }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .status.completed { background: #d4edda; color: #155724; }
+        .status.cancelled { background: #f8d7da; color: #721c24; }
+        .action-btn {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        .edit-btn { background: #4ecdc4; color: white; }
+        .delete-btn { background: #ff6b6b; color: white; }
+        .add-btn {
+            background: #c41e3a;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar { width: 80px; padding: 20px 10px; }
+            .sidebar .logo-admin, .sidebar .menu-item span { display: none; }
+            .main-content { margin-left: 80px; width: calc(100% - 80px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-admin">Sushi<span>House</span></div>
+        <div class="menu">
+            <div class="menu-item active" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Tổng quan</span>
+            </div>
+            <div class="menu-item" data-page="products">
+                <i class="fas fa-utensils"></i><span>Quản lý món ăn</span>
+            </div>
+            <div class="menu-item" data-page="orders">
+                <i class="fas fa-shopping-cart"></i><span>Đơn hàng</span>
+            </div>
+            <div class="menu-item" data-page="customers">
+                <i class="fas fa-users"></i><span>Khách hàng</span>
+            </div>
+            <div class="menu-item" style="margin-top: auto;">
+                <i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="header">
+            <h1 id="pageTitle">Tổng quan</h1>
+            <div class="user-info">
+                <span>Xin chào, <strong>Admin</strong></span>
+                <div class="avatar">AD</div>
+            </div>
+        </div>
+
+        <!-- Trang Tổng quan -->
+        <div id="dashboard" class="content-area active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-yen-sign"></i></div>
+                    <h3>52.480.000đ</h3>
+                    <p>Doanh thu tháng 11</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3>1.248</h3>
+                    <p>Đơn hàng mới</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>89</h3>
+                    <p>Món ăn đang bán</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
+                    <h3>8.542</h3>
+                    <p>Khách hàng</p>
+                </div>
+            </div>
+
+            <h2 style="margin: 40px 0 20px; color: #c41e3a;">Đơn hàng gần đây</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Mã đơn</th><th>Khách</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thời gian</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>#SH2025</td><td>Nguyễn Văn A</td><td>568.000đ</td><td><span class="status pending">Chờ xử lý</span></td><td>15 phút trước</td></tr>
+                        <tr><td>#SH2024</td><td>Trần Thị B</td><td>459.000đ</td><td><span class="status completed">Hoàn thành</span></td><td>1 giờ trước</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trang Quản lý món ăn -->
+        <div id="products" class="content-area">
+            <button class="add-btn">+ Thêm món mới</button>
+            <h2 style="color: #c41e3a; margin: 20px 0;">Danh sách món ăn</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Ảnh</th><th>Tên món</th><th>Danh mục</th><th>Giá</th><th>Trạng thái</th><th>Hành động</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=60&h=60&fit=crop" style="border-radius:8px;"></td>
+                            <td>Salmon Aburi Mentai</td>
+                            <td>Sushi</td>
+                            <td>219.000đ</td>
+                            <td><span class="status completed">Đang bán</span></td>
+                            <td>
+                                <button class="action-btn edit-btn">Sửa</button>
+                                <button class="action-btn delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1607305387299-a3d9611cd469?w=60&h=60&fit=crop" style="border-radius:8px;"></td>
+                            <td>Ramen Tonkotsu</td>
+                            <td>Ramen</td>
+                            <td>149.000đ</td>
+                            <td><span class="status completed">Đang bán</span></td>
+                            <td>
+                                <button class="action-btn edit-btn">Sửa</button>
+                                <button class="action-btn delete-btn">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trang Đơn hàng -->
+        <div id="orders" class="content-area">
+            <h2 style="color: #c41e3a; margin-bottom: 20px;">Tất cả đơn hàng</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Mã đơn</th><th>Khách hàng</th><th>Số món</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thời gian</th><th>Hành động</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>#SH2025</td><td>Nguyễn Lan Anh</td><td>3 món</td><td>689.000đ</td><td><span class="status pending">Đang giao</span></td><td>22/11/2025 18:30</td><td><button class="action-btn edit-btn">Xem</button></td></tr>
+                        <tr><td>#SH2024</td><td>Trần Minh Quân</td><td>1 món</td><td>219.000đ</td><td><span class="status completed">Hoàn thành</span></td><td>22/11/2025 12:15</td><td><button class="action-btn edit-btn">Xem</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trang Khách hàng -->
+        <div id="customers" class="content-area">
+            <h2 style="color: #c41e3a; margin-bottom: 20px;">Danh sách khách hàng</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Khách hàng</th><th>SĐT</th><th>Email</th><th>Tổng đơn</th><th>Tổng chi</th><th>Tham gia</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Nguyễn Thị Hương</td><td>0901234567</td><td>huong@gmail.com</td><td>42 đơn</td><td>18.520.000đ</td><td>15/03/2024</td></tr>
+                        <tr><td>Phạm Văn Nam</td><td>0919876543</td><td>nam.pham@gmail.com</td><td>28 đơn</td><td>12.380.000đ</td><td>01/06/2024</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chuyển trang khi click menu
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Xóa active cũ
+                document.querySelector('.menu-item.active').classList.remove('active');
+                document.querySelector('.content-area.active').classList.remove('active');
+
+                // Thêm active mới
+                this.classList.add('active');
+                const page = this.getAttribute('data-page');
+                document.getElementById(page).classList.add('active');
+
+                // Cập nhật tiêu đề
+                const titles = {
+                    dashboard: "Tổng quan",
+                    products: "Quản lý món ăn",
+                    orders: "Quản lý đơn hàng",
+                    customers: "Quản lý khách hàng"
+                };
+                document.getElementById('pageTitle').textContent = titles[page];
+            });
+        });
+    </script>
+</body>
+</html>

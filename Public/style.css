@@ -1,0 +1,267 @@
+
+    /* Reset & chung */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',Arial,sans-serif; line-height:1.6; color:#333; background:#fafafa; }
+    img { max-width:100%; display:block; }
+    a { text-decoration:none; color:inherit; }
+    /* Container căn giữa + margin 2 bên */
+    .container {
+      max-width:1280px;
+      margin:0 auto;
+      padding:0 20px;
+    }
+    /* Header */
+    header {
+      background:#fff;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .header-inner {
+      display:flex;
+      align-items:center;
+      padding:15px 0;
+    }
+    .logo {
+      font-size:28px;
+      font-weight:900;
+      color:#e74c3c;
+    }
+    .main-menu {
+      display:flex;
+      gap:40px;
+      list-style:none;
+    }
+    .main-menu a {
+      font-weight:600;
+      font-size:15px;
+      transition:color .3s;
+    }
+    .main-menu a:hover { color:#e74c3c; }
+    .header-right {
+      display:flex;
+      align-items:center;
+      gap:25px;
+    }
+    .search-box {
+      padding:10px 15px;
+      border:1px solid #ddd;
+      border-radius:30px;
+      width:250px;
+      font-size:14px;
+    }
+    .icon-link {
+      font-size:20px;
+      position:relative;
+    }
+    .cart-count {
+      position:absolute;
+      top:-8px;
+      right:-10px;
+      background:#e74c3c;
+      color:#fff;
+      font-size:12px;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    /* Banner */
+    .banner, .banner-bottom {
+      height:500px;
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-shadow:0 3px 10px rgba(0,0,0,0.6);
+      font-size:48px;
+      font-weight:900;
+      text-align:center;
+    }
+    .banner {
+      background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=2127&auto=format');
+    }
+    .banner-bottom {
+      background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1555939594-58cd080df94b?q=80&w=2124&auto=format');
+      height:350px;
+      font-size:36px;
+      margin-top:100px;
+    }
+    /* Drift banner (banner trôi) */
+    .drift-banner {
+      --drift-duration: 28s; /* adjust speed: larger = slower */
+      width:100%;
+      overflow:hidden;
+      position:relative;
+      background:#111;
+      border-bottom:6px solid rgba(231,76,60,0.06);
+    }
+    .drift-track {
+      display:flex;
+      gap:18px;
+      align-items:center;
+      padding:18px 0;
+      /* run animation moving full width of track */
+      animation:drift linear var(--drift-duration) infinite;
+      will-change:transform;
+    }
+    .drift-item {
+      min-width:320px;
+      width:28%;
+      max-width:420px;
+      background:#000;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+      position:relative;
+    }
+    .drift-item img { display:block; width:100%; height:220px; object-fit:cover; }
+    .drift-caption {
+      position:absolute;
+      left:12px;
+      bottom:12px;
+      color:#fff;
+      font-weight:800;
+      font-size:16px;
+      text-shadow:0 3px 10px rgba(0,0,0,0.6);
+      background:linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));
+      padding:8px 12px;
+      border-radius:8px;
+    }
+    /* pause on hover (also handled by JS for touch) */
+    .drift-banner:hover .drift-track,
+    .drift-banner:focus-within .drift-track {
+      animation-play-state:paused;
+    }
+    @keyframes drift {
+      0% { transform:translateX(0); }
+      100% { transform:translateX(-50%); }
+    }
+    /* responsive tweaks */
+    @media (max-width: 992px) {
+      .drift-item { width:40%; min-width:260px; }
+      .drift-item img { height:180px; }
+    }
+    @media (max-width: 576px) {
+      .drift-track { gap:10px; }
+      .drift-item { width:70%; min-width:220px; }
+      .drift-item img { height:160px; }
+      .drift-caption { font-size:14px; }
+    }
+    /* Section chung */
+    section {
+      padding:80px 0;
+    }
+    .section-title {
+      text-align:center;
+      font-size:36px;
+      margin-bottom:60px;
+      color:#2c3e50;
+    }
+    /* Grid sản phẩm - Chuyển sang grid 12 cột responsive */
+    .products-grid {
+      display:grid;
+      grid-template-columns: repeat(12, 1fr); /* Grid 12 cột */
+      gap:30px;
+    }
+    .product-card {
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      transition:transform .3s, box-shadow .3s;
+      grid-column: span 3; /* Mỗi card chiếm 3 cột (4 card/row ở full width) */
+    }
+    .product-card:hover {
+      transform:translateY(-10px);
+      box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    }
+    .product-img {
+      height:220px;
+      object-fit:cover;
+    }
+    .product-info {
+      padding:20px;
+      text-align:center;
+    }
+    .product-name {
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:8px;
+    }
+    .product-price {
+      color:#e74c3c;
+      font-size:20px;
+      font-weight:700;
+      margin-bottom:15px;
+    }
+    .btn-add {
+      background:#e74c3c;
+      color:#fff;
+      border:none;
+      padding:12px 25px;
+      border-radius:30px;
+      cursor:pointer;
+      font-weight:600;
+      width:100%;
+      transition:background .3s;
+    }
+    .btn-add:hover { background:#c0392b; }
+    /* Tin tức */
+    .news-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));
+      gap:40px;
+    }
+    .news-card {
+      display:flex;
+      gap:20px;
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    }
+    .news-img {
+      width:150px;
+      height:150px;
+      object-fit:cover;
+    }
+    .news-content {
+      padding:15px 0;
+    }
+    .news-title {
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:10px;
+    }
+    .news-date {
+      color:#888;
+      font-size:14px;
+    }
+    /* Footer đơn giản */
+    footer {
+      background:#2c3e50;
+      color:#ecf0f1;
+      text-align:center;
+      padding:40px 0;
+      margin-top:100px;
+    }
+    @media (max-width: 992px) {
+      .header-inner { flex-direction:column; gap:20px; }
+      .search-box { width:100%; max-width:400px; }
+      .banner, .banner-bottom { height:350px; font-size:36px; }
+      .product-card { grid-column: span 4; } /* 3 card/row */
+    }
+    @media (max-width: 768px) {
+      .main-menu { gap:20px; }
+      .section-title { font-size:30px; }
+      .product-card { grid-column: span 6; } /* 2 card/row */
+    }
+    @media (max-width: 576px) {
+      .product-card { grid-column: span 12; } /* 1 card/row */
+    }
