@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Giỏ Hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #c41e3a; /* Red header similar to the image */
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .back-button::before {
+            content: '\2190'; /* Left arrow */
+            margin-right: 5px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .main-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .cart-items {
+            flex: 3;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .cart-item img {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .item-details {
+            flex: 1;
+        }
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .item-price {
+            color: #c41e3a;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .quantity {
+            display: flex;
+            align-items: center;
+        }
+        .quantity button {
+            background-color: #c41e3a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        .quantity input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #c41e3a;
+        }
+        .checkout-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #c41e3a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background-color: #a51b30;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="back-button">Quay lại trang chủ</a>
+        <div class="logo">SushiHouse</div>
+        <div></div> <!-- Placeholder for balance or other elements -->
+    </header>
+    <div class="main-container">
+        <div class="cart-items">
+            <h2>Giỏ Hàng Của Bạn</h2>
+            <div class="cart-item">
+                <img src="https://via.placeholder.com/100?text=Salmon+Aburi" alt="Salmon Aburi Mentai">
+                <div class="item-details">
+                    <div class="item-name">Salmon Aburi Mentai</div>
+                    <div class="item-price">219.000đ</div>
+                    <div class="quantity">
+                        <button>-</button>
+                        <input type="number" value="1" min="1">
+                        <button>+</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more items as needed -->
+            <div class="cart-item">
+                <img src="https://via.placeholder.com/100?text=Sushi+Roll" alt="Sushi Roll">
+                <div class="item-details">
+                    <div class="item-name">Sushi Roll</div>
+                    <div class="item-price">150.000đ</div>
+                    <div class="quantity">
+                        <button>-</button>
+                        <input type="number" value="2" min="1">
+                        <button>+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h3>Thông Tin Đơn Hàng</h3>
+            <div class="price-info">
+                <span>Tạm tính:</span>
+                <span>519.000đ</span>
+            </div>
+            <div class="price-info">
+                <span>Giảm giá:</span>
+                <span>-20.000đ</span>
+            </div>
+            <div class="price-info">
+                <span>Phí vận chuyển:</span>
+                <span>30.000đ</span>
+            </div>
+            <hr>
+            <div class="price-info total">
+                <span>Tổng cộng:</span>
+                <span>529.000đ</span>
+            </div>
+            <button class="checkout-button">Thanh Toán</button>
+        </div>
+    </div>
+</body>
+</html>
