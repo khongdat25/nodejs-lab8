@@ -3,184 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Sản Phẩm</title>
+    <title>Admin Dashboard - Sushi House</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; color: #333; display: flex; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
             height: 100vh;
-        }
-        header {
-            background-color: #c41e3a; /* Red header */
+            background: #c41e3a;
             color: white;
-            padding: 15px;
+            padding: 30px 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+        .logo-admin {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+        .logo-admin span { color: #ffeb3b; }
+
+        .menu-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .user-info {
-            font-size: 16px;
-        }
-        .main-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        .sidebar {
-            background-color: #333;
-            color: white;
-            width: 250px;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .sidebar h3 {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar li {
-            margin-bottom: 15px;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            display: block;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        .sidebar a:hover {
-            background-color: #555;
-        }
-        .sidebar a.active {
-            background-color: #c41e3a;
-        }
-        .content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background-color: white;
-        }
-        .content h2 {
-            color: #c41e3a;
-            margin-bottom: 20px;
-        }
-        .add-button {
-            background-color: #c41e3a;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 8px;
             cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px;
+            transition: all 0.3s;
         }
-        .add-button:hover {
-            background-color: #a51b30;
+        .menu-item i { margin-right: 15px; font-size: 20px; width: 30px; text-align: center; }
+        .menu-item:hover { background: #a1172d; transform: translateX(8px); }
+        .menu-item.active {
+            background: #ffeb3b;
+            color: #c41e3a;
+            font-weight: bold;
+            transform: translateX(8px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+        }
+        .header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-size: 28px; color: #c41e3a; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: #ffeb3b; color: #c41e3a; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }
+
+        /* Content Area */
+        .content-area { display: none; }
+        .content-area.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .stat-icon {
+            width: 70px; height: 70px; border-radius: 16px; margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center; font-size: 32px; color: white;
+        }
+        .stat-card:nth-child(1) .stat-icon { background: #c41e3a; }
+        .stat-card:nth-child(2) .stat-icon { background: #ff6b6b; }
+        .stat-card:nth-child(3) .stat-icon { background: #4ecdc4; }
+        .stat-card:nth-child(4) .stat-icon { background: #45b7d1; }
+        .stat-card h3 { font-size: 32px; font-weight: bold; margin: 10px 0; }
+        .stat-card p { color: #666; }
+
+        /* Table chung */
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
         table {
             width: 100%;
             border-collapse: collapse;
+        }
+        th, td { padding: 18px 25px; text-align: left; }
+        th { background: #c41e3a; color: white; }
+        tr:nth-child(even) { background: #fdfafa; }
+        tr:hover { background: #fff0f0; }
+        .status { padding: 8px 16px; border-radius: 30px; font-weight: bold; font-size: 13px; }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .status.completed { background: #d4edda; color: #155724; }
+        .status.cancelled { background: #f8d7da; color: #721c24; }
+        .action-btn {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        .edit-btn { background: #4ecdc4; color: white; }
+        .delete-btn { background: #ff6b6b; color: white; }
+        .add-btn {
+            background: #c41e3a;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            float: right;
             margin-bottom: 20px;
         }
-        th, td {
+
+        /* Modal for Add/Edit */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 500px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .modal-content h2 { color: #c41e3a; margin-bottom: 20px; }
+        .modal-content label { display: block; margin-bottom: 10px; }
+        .modal-content input, .modal-content select {
+            width: 100%;
             padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-        .actions button {
-            background-color: #c41e3a;
-            color: white;
+        .modal-content button {
+            padding: 12px 25px;
             border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-right: 5px;
         }
-        .actions button:hover {
-            background-color: #a51b30;
-        }
-        .actions button.delete {
-            background-color: #dc3545;
-        }
-        .actions button.delete:hover {
-            background-color: #c82333;
+        .save-btn { background: #c41e3a; color: white; }
+        .cancel-btn { background: #ddd; color: #333; margin-left: 10px; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar { width: 80px; padding: 20px 10px; }
+            .sidebar .logo-admin, .sidebar .menu-item span { display: none; }
+            .main-content { margin-left: 80px; width: calc(100% - 80px); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">SushiHouse Admin</div>
-        <div class="user-info">Xin chào, Admin!</div>
-    </header>
-    <div class="main-container">
-        <div class="sidebar">
-            <h3>Menu</h3>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#" class="active">Quản lý Sản phẩm</a></li>
-                <li><a href="#">Quản lý Đơn hàng</a></li>
-                <li><a href="#">Quản lý Người dùng</a></li>
-                <li><a href="#">Cài đặt</a></li>
-                <li><a href="#">Đăng xuất</a></li>
-            </ul>
-        </div>
-        <div class="content">
-            <h2>Quản Lý Sản Phẩm</h2>
-            <button class="add-button">Thêm Sản Phẩm Mới</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Giá</th>
-                        <th>Mô Tả</th>
-                        <th>Hình Ảnh</th>
-                        <th>Hành Động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Salmon Aburi Mentai</td>
-                        <td>219.000đ</td>
-                        <td>Món ăn ngon nhất năm 2025</td>
-                        <td><img src="https://via.placeholder.com/50?text=Image" alt="Image" width="50"></td>
-                        <td class="actions">
-                            <button>Sửa</button>
-                            <button class="delete">Xóa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sushi Roll</td>
-                        <td>150.000đ</td>
-                        <td>Cuốn sushi tươi ngon</td>
-                        <td><img src="https://via.placeholder.com/50?text=Image" alt="Image" width="50"></td>
-                        <td class="actions">
-                            <button>Sửa</button>
-                            <button class="delete">Xóa</button>
-                        </td>
-                    </tr>
-                    <!-- Thêm các sản phẩm khác nếu cần -->
-                </tbody>
-            </table>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-admin">Sushi<span>House</span></div>
+        <div class="menu">
+            <div class="menu-item active" data-page="dashboard">
+                <i class="fas fa-home"></i><span>Tổng quan</span>
+            </div>
+            <div class="menu-item" data-page="products">
+                <i class="fas fa-utensils"></i><span>Quản lý món ăn</span>
+            </div>
+            <div class="menu-item" data-page="orders">
+                <i class="fas fa-shopping-cart"></i><span>Đơn hàng</span>
+            </div>
+            <div class="menu-item" data-page="customers">
+                <i class="fas fa-users"></i><span>Khách hàng</span>
+            </div>
+            <div class="menu-item" style="margin-top: auto;">
+                <i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span>
+            </div>
         </div>
     </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="header">
+            <h1 id="pageTitle">Tổng quan</h1>
+            <div class="user-info">
+                <span>Xin chào, <strong>Admin</strong></span>
+                <div class="avatar">AD</div>
+            </div>
+        </div>
+
+        <!-- Trang Tổng quan -->
+        <div id="dashboard" class="content-area active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-yen-sign"></i></div>
+                    <h3>52.480.000đ</h3>
+                    <p>Doanh thu tháng 11</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3>1.248</h3>
+                    <p>Đơn hàng mới</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>89</h3>
+                    <p>Món ăn đang bán</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-user-friends"></i></div>
+                    <h3>8.542</h3>
+                    <p>Khách hàng</p>
+                </div>
+            </div>
+
+            <h2 style="margin: 40px 0 20px; color: #c41e3a;">Đơn hàng gần đây</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Mã đơn</th><th>Khách</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thời gian</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>#SH2025</td><td>Nguyễn Văn A</td><td>568.000đ</td><td><span class="status pending">Chờ xử lý</span></td><td>15 phút trước</td></tr>
+                        <tr><td>#SH2024</td><td>Trần Thị B</td><td>459.000đ</td><td><span class="status completed">Hoàn thành</span></td><td>1 giờ trước</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trang Quản lý món ăn -->
+        <div id="products" class="content-area">
+            <button class="add-btn" onclick="openModal('add')">+ Thêm món mới</button>
+            <h2 style="color: #c41e3a; margin: 20px 0;">Danh sách món ăn</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Ảnh</th><th>Tên món</th><th>Danh mục</th><th>Giá</th><th>Trạng thái</th><th>Hành động</th></tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Các hàng sẽ được render động bởi JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trang Đơn hàng -->
+        <div id="orders" class="content-area">
+            <h2 style="color: #c41e3a; margin-bottom: 20px;">Tất cả đơn hàng</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Mã đơn</th><th>Khách hàng</th><th>Số món</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thời gian</th><th>Hành động</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>#SH2025</td><td>Nguyễn Lan Anh</td><td>3 món</td><td>689.000đ</td><td><span class="status pending">Đang giao</span></td><td>22/11/2025 18:30</td><td><button class="action-btn edit-btn">Xem</button></td></tr>
+                        <tr><td>#SH2024</td><td>Trần Minh Quân</td><td>1 món</td><td>219.000đ</td><td><span class="status completed">Hoàn thành</span></td><td>22/11/2025 12:15</td><td><button class="action-btn edit-btn">Xem</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trang Khách hàng -->
+        <div id="customers" class="content-area">
+            <h2 style="color: #c41e3a; margin-bottom: 20px;">Danh sách khách hàng</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Khách hàng</th><th>SĐT</th><th>Email</th><th>Tổng đơn</th><th>Tổng chi</th><th>Tham gia</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Nguyễn Thị Hương</td><td>0901234567</td><td>huong@gmail.com</td><td>42 đơn</td><td>18.520.000đ</td><td>15/03/2024</td></tr>
+                        <tr><td>Phạm Văn Nam</td><td>0919876543</td><td>nam.pham@gmail.com</td><td>28 đơn</td><td>12.380.000đ</td><td>01/06/2024</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal cho Thêm/Sửa món ăn -->
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <h2 id="modalTitle">Thêm món mới</h2>
+                <form id="productForm">
+                    <label for="name">Tên món:</label>
+                    <input type="text" id="name" required>
+
+                    <label for="category">Danh mục:</label>
+                    <select id="category" required>
+                        <option value="sushi">Sushi & Maki</option>
+                        <option value="sashimi">Sashimi</option>
+                        <option value="ramen">Ramen & Udon</option>
+                        <option value="tempura">Tempura & Chiên</option>
+                        <option value="rice">Cơm & Donburi</option>
+                        <option value="salad">Salad Nhật</option>
+                        <option value="dessert">Tráng miệng</option>
+                        <option value="drink">Đồ uống</option>
+                    </select>
+
+                    <label for="price">Giá (đ):</label>
+                    <input type="number" id="price" required>
+
+                    <label for="oldPrice">Giá cũ (nếu có):</label>
+                    <input type="number" id="oldPrice">
+
+                    <label for="img">Link ảnh:</label>
+                    <input type="text" id="img" required>
+
+                    <label for="badge">Badge (HOT, NEW, ...):</label>
+                    <input type="text" id="badge">
+
+                    <label for="status">Trạng thái:</label>
+                    <select id="status" required>
+                        <option value="completed">Đang bán</option>
+                        <option value="pending">Tạm dừng</option>
+                    </select>
+
+                    <input type="hidden" id="editIndex">
+
+                    <button type="button" class="save-btn" onclick="saveProduct()">Lưu</button>
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Hủy</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chuyển trang khi click menu
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Xóa active cũ
+                document.querySelector('.menu-item.active').classList.remove('active');
+                document.querySelector('.content-area.active').classList.remove('active');
+
+                // Thêm active mới
+                this.classList.add('active');
+                const page = this.getAttribute('data-page');
+                document.getElementById(page).classList.add('active');
+
+                // Cập nhật tiêu đề
+                const titles = {
+                    dashboard: "Tổng quan",
+                    products: "Quản lý món ăn",
+                    orders: "Quản lý đơn hàng",
+                    customers: "Quản lý khách hàng"
+                };
+                document.getElementById('pageTitle').textContent = titles[page];
+
+                // Nếu là trang products, render bảng
+                if (page === 'products') {
+                    renderProducts();
+                }
+            });
+        });
+
+        // Dữ liệu mẫu (từ product.html, lưu vào localStorage nếu chưa có)
+        let products = JSON.parse(localStorage.getItem('products')) || [
+            { name: "Salmon Aburi Mentai", price: 219000, oldPrice: 280000, img: "https://images.unsplash.com/photo-1623379914807-20a8a9e4e2d5?q=80&w=800", badge: "HOT", category: "sushi", status: "completed" },
+            { name: "Sashimi Tổng Hợp Cao Cấp", price: 459000, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=800", category: "sashimi", status: "completed" },
+            { name: "Ramen Tonkotsu Truyền Thống", price: 149000, img: "https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=800", category: "ramen", status: "completed" },
+            { name: "Unagi Don - Lươn Nướng", price: 299000, img: "https://images.unsplash.com/photo-1634214677453-9b37885f0d9a?q=80&w=800", badge: "NEW", category: "rice", status: "completed" },
+            { name: "Volcano Roll", price: 239000, img: "https://images.unsplash.com/photo-1613843873231-1447db182bf7?q=80&w=800", badge: "BÁN CHẠY", category: "sushi", status: "completed" },
+            { name: "Takoyaki Bạch Tuộc", price: 89000, img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=800", category: "tempura", status: "completed" },
+            { name: "Tempura Tôm Sú", price: 179000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1625937283075-a20e1a4f4a6d?q=80&w=800", badge: "-20%", category: "tempura", status: "completed" },
+            { name: "Mochi Kem 4 Vị", price: 99000, img: "https://images.unsplash.com/photo-1623341214825-9f4f5717cbbb?q=80&w=800", badge: "LIMITED", category: "dessert", status: "completed" },
+            { name: "Katsu Curry Nhật Bản", price: 179000, img: "https://images.unsplash.com/photo-1598970535080-9f9d66d4e0c5?q=80&w=800", category: "rice", status: "completed" },
+            { name: "Sushi Cá Hồi NaUy", price: 189000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800", category: "sushi", status: "completed" }
+        ];
+        localStorage.setItem('products', JSON.stringify(products)); // Lưu nếu chưa có
+
+        // Render bảng sản phẩm
+        function renderProducts() {
+            products = JSON.parse(localStorage.getItem('products')) || [];
+            const tbody = document.getElementById('productTableBody');
+            tbody.innerHTML = '';
+            products.forEach((p, index) => {
+                const row = `
+                    <tr>
+                        <td><img src="${p.img}" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"></td>
+                        <td>${p.name}</td>
+                        <td>${p.category}</td>
+                        <td>${p.price.toLocaleString('vi-VN')}đ</td>
+                        <td><span class="status ${p.status}">${p.status === 'completed' ? 'Đang bán' : 'Tạm dừng'}</span></td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="openModal('edit', ${index})">Sửa</button>
+                            <button class="action-btn delete-btn" onclick="deleteProduct(${index})">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Mở modal
+        function openModal(mode, index = -1) {
+            const modal = document.getElementById('productModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('productForm');
+
+            if (mode === 'add') {
+                title.textContent = 'Thêm món mới';
+                form.reset();
+                document.getElementById('editIndex').value = -1;
+            } else if (mode === 'edit') {
+                title.textContent = 'Sửa món ăn';
+                const p = products[index];
+                document.getElementById('name').value = p.name;
+                document.getElementById('category').value = p.category;
+                document.getElementById('price').value = p.price;
+                document.getElementById('oldPrice').value = p.oldPrice || '';
+                document.getElementById('img').value = p.img;
+                document.getElementById('badge').value = p.badge || '';
+                document.getElementById('status').value = p.status;
+                document.getElementById('editIndex').value = index;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        // Đóng modal
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Lưu sản phẩm
+        function saveProduct() {
+            const index = parseInt(document.getElementById('editIndex').value);
+            const product = {
+                name: document.getElementById('name').value,
+                category: document.getElementById('category').value,
+                price: parseInt(document.getElementById('price').value),
+                oldPrice: parseInt(document.getElementById('oldPrice').value) || undefined,
+                img: document.getElementById('img').value,
+                badge: document.getElementById('badge').value || undefined,
+                status: document.getElementById('status').value
+            };
+
+            if (index === -1) {
+                products.push(product);
+            } else {
+                products[index] = product;
+            }
+
+            localStorage.setItem('products', JSON.stringify(products));
+            closeModal();
+            renderProducts();
+        }
+
+        // Xóa sản phẩm
+        function deleteProduct(index) {
+            if (confirm('Bạn chắc chắn muốn xóa món ăn này?')) {
+                products.splice(index, 1);
+                localStorage.setItem('products', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+    </script>
 </body>
 </html>

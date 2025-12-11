@@ -24,7 +24,7 @@
         h2 {
             text-align: center;
             margin-bottom: 25px;
-            color: #b22222; /* Red color similar to the header */
+            color: #b22222;
             font-size: 24px;
         }
         label {
@@ -40,13 +40,13 @@
             margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 16px;
+            box-sizing:border-box;
+            font-size:16px;
         }
         button {
             width: 100%;
             padding: 12px;
-            background-color: #c41e3a; /* Vibrant red button */
+            background-color: #c41e3a;
             color: white;
             border: none;
             border-radius: 6px;
@@ -54,27 +54,16 @@
             font-size: 16px;
             font-weight: bold;
         }
-        button:hover {
-            background-color: #a51b30; /* Darker red on hover */
-        }
-        .forgot-password {
-            text-align: center;
-            margin-top: 15px;
-        }
-        .forgot-password a {
-            color: #c41e3a; /* Red link */
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
+        button:hover { background-color: #a51b30; }
+        .forgot-password { text-align:center; margin-top:15px; }
+        .forgot-password a { color:#c41e3a; text-decoration:none; font-size:14px; }
+        .forgot-password a:hover { text-decoration:underline; }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Đăng Nhập</h2>
-        <form action="#" method="post">
+        <form id="loginForm">
             <label for="username">Tên đăng nhập:</label>
             <input type="text" id="username" name="username" required>
             
@@ -87,5 +76,31 @@
             <a href="#">Quên mật khẩu?</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Tài khoản admin
+            if (username === 'admin' && password === 'admin123') {
+                localStorage.setItem('currentUser', 'Admin');
+                window.location.href = '/Views/admin.html';
+                return;
+            }
+
+            // Tài khoản user thường
+            if (username === 'user' && password === 'user123') {
+                localStorage.setItem('currentUser', 'Bạn');   // Có thể đổi thành tên thật: "Lan Anh", "Minh Quân",...
+                window.location.href = '/Views/Home.html';
+                return;
+            }
+
+            // Sai thông tin
+            alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+        });
+    </script>
 </body>
 </html>

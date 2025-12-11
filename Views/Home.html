@@ -9,194 +9,230 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: #fdfafa; color: #333; }
 
-        header {
-            background: #c41e3a;
-            color: white;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        }
-        .top-bar { background: #a1172d; padding: 8px 20px; font-size: 14px; text-align: right; }
+        header { background: #c41e3a; color: white; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        .top-bar { background: #a1172d; padding: 8px 20px; font-size: 14px; text-align: right; color:#ffeb3b; }
         nav { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 70px; }
         .logo { font-size: 28px; font-weight: bold; text-decoration: none; color: white; }
         .logo span { color: #ffeb3b; }
         .menu a { color: white; text-decoration: none; margin: 0 20px; font-weight: 500; }
         .menu a:hover { color: #ffeb3b; }
-        .header-right { display: flex; align-items: center; gap: 20px; position: relative; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
         .search-box { position: relative; }
-        .search-box input { padding: 10px 40px 10px 15px; border: none; border-radius: 30px; width: 250px; }
-        .search-box i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999; }
-        .login-btn { background: #ffeb3b; color: #c41e3a; padding: 10px 25px; border-radius: 30px; text-decoration: none; font-weight: bold; }
-        .cart-icon { position: relative; font-size: 24px; color: white; cursor: pointer; }
-        .cart-count {
-            position: absolute; top: -8px; right: -12px;
-            background: #ffeb3b; color: #c41e3a;
-            width: 20px; height: 20px; border-radius: 50%;
-            font-size: 12px; font-weight: bold;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .search-box input { padding: 10px 40px 10px 15px; border:none; border-radius:30px; width:250px; }
+        .search-box i { position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#999; }
+        .login-btn { background:#ffeb3b; color:#c41e3a; padding:10px 25px; border-radius:30px; text-decoration:none; font-weight:bold; }
+        .cart-icon { position:relative; font-size:24px; color:white; cursor:pointer; }
+        .cart-count { position:absolute; top:-8px; right:-12px; background:#ffeb3b; color:#c41e3a; width:20px; height:20px; border-radius:50%; font-size:12px; font-weight:bold; display:flex; align-items:center; justify-content:center; }
 
         main { margin-top: 110px; padding: 50px 0; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 15px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        .section-title {
-            text-align: center; font-size: 34px; color: #c41e3a;
-            margin: 70px 0 45px; font-weight: bold; position: relative;
-        }
-        .section-title::after { content: ''; width: 90px; height: 4px; background: #ffeb3b; display: block; margin: 18px auto 0; border-radius: 2px; }
+        .section-title { text-align: center; font-size: 36px; color: #c41e3a; margin: 80px 0 50px; font-weight: bold; position: relative; }
+        .section-title::after { content:''; width:90px; height:4px; background:#ffeb3b; display:block; margin:18px auto 0; border-radius:2px; }
 
-        .horizontal-scroll {
-            display: flex; overflow-x: auto; gap: 25px; padding: 15px 0 40px;
-            scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
-        }
-        .horizontal-scroll::-webkit-scrollbar { display: none; }
+        .horizontal-scroll { display:flex; overflow-x:auto; gap:25px; padding:15px 0 40px; scroll-behavior:smooth; }
+        .horizontal-scroll::-webkit-scrollbar { display:none; }
 
-        .product-card {
-            min-width: 280px; max-width: 280px; background: white; border-radius: 18px;
-            overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: all 0.4s;
-            position: relative; flex-shrink: 0; cursor: pointer;
-        }
-        .product-card:hover { transform: translateY(-12px); box-shadow: 0 0 20px 40px rgba(0,0,0,0.18); }
-        .product-img { height: 220px; overflow: hidden; }
-        .product-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .product-card:hover .product-img img { transform: scale(1.15); }
-        .product-info { padding: 20px 18px; text-align: center; }
-        .product-info h3 { font-size: 18px; font-weight: 600; height: 54px; overflow: hidden; margin-bottom: 10px;
-            display: -webkit-box;  -webkit-box-orient: vertical; }
-        .price { font-size: 24px; color: #c41e3a; font-weight: bold; }
-        .old-price { font-size: 17px; text-decoration: line-through; color: #999; margin-left: 8px; }
-        .btn-add {
-            margin-top: 14px; width: 100%; padding: 13px; background: #c41e3a; color: white;
-            border: none; border-radius: 30px; font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.3s;
-        }
-        .btn-add:hover { background: #a1172d; }
-        .badge { position: absolute; top: 12px; left: 12px; background: #ffeb3b; color: #c41e3a;
-            padding: 6px 14px; border-radius: 30px; font-weight: bold; font-size: 13px; z-index: 1; }
+        .product-card { min-width:280px; background:white; border-radius:18px; overflow:hidden; box-shadow:0 8px 25px rgba(0,0,0,0.1); transition:0.4s; cursor:pointer; }
+        .product-card:hover { transform:translateY(-12px); }
+        .product-img { height:220px; overflow:hidden; }
+        .product-img img { width:100%; height:100%; object-fit:cover; transition:0.5s; }
+        .product-card:hover .product-img img { transform:scale(1.15); }
+        .product-info { padding:20px; text-align:center; }
+        .product-info h3 { font-size:18px; font-weight:600; height:54px; overflow:hidden; margin-bottom:10px; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+        .price { font-size:24px; color:#c41e3a; font-weight:bold; }
+        .old-price { font-size:17px; text-decoration:line-through; color:#999; margin-left:8px; }
+        .btn-add { margin-top:14px; width:100%; padding:13px; background:#c41e3a; color:white; border:none; border-radius:30px; font-weight:bold; cursor:pointer; }
+        .btn-add:hover { background:#a1172d; }
+        .badge { position:absolute; top:12px; left:12px; background:#ffeb3b; color:#c41e3a; padding:6px 14px; border-radius:30px; font-weight:bold; font-size:13px; z-index:1; }
 
-        .news-section { background: #f8f8f8; padding: 80px 0 60px; margin: 40px 0; }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; justify-content: center; }
-        .news-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.08); transition: 0.3s; }
-        .news-card:hover { transform: translateY(-8px); }
-        .news-card img { width: 100%; height: 190px; object-fit: cover; }
-        .news-info { padding: 20px; }
-        .news-info h3 { font-size: 18px; color: #c41e3a; margin-bottom: 10px; }
+        /* PHẦN TIN TỨC */
+        .news-section { background:#fff; padding:100px 0; }
+        .news-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(360px,1fr)); gap:40px; }
+        .news-card { background:white; border-radius:16px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.1); transition:0.4s; }
+        .news-card:hover { transform:translateY(-12px); }
+        .news-card img { width:100%; height:220px; object-fit:cover; }
+        .news-info { padding:25px; }
+        .news-info .date { color:#c41e3a; font-weight:bold; font-size:14px; margin-bottom:8px; }
+        .news-info h3 { font-size:20px; margin:10px 0; line-height:1.4; }
+        .news-info p { color:#666; line-height:1.7; margin-bottom:15px; }
+        .read-more { color:#c41e3a; font-weight:bold; text-decoration:none; }
+        .read-more:hover { text-decoration:underline; }
 
-        /* Toast thông báo */
-        .toast {
-            position: fixed; bottom: 30px; right: 30px; background: #333; color: white;
-            padding: 16px 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 9999; opacity: 0; transform: translateY(100px); transition: all 0.4s;
-            display: flex; align-items: center; gap: 12px; font-size: 16px;
-        }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast i { color: #4ade80; font-size: 24px; }
+        /* FOOTER */
+        footer { background:#1a1a1a; color:#ccc; padding:90px 0 30px; margin-top:100px; }
+        .footer-grid { max-width:1200px; margin:0 auto; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:40px; }
+        footer h3, footer h4 { color:#ffeb3b; margin-bottom:20px; }
+        footer a { color:#ccc; text-decoration:none; font-size:15px; line-height:2.2; }
+        footer a:hover { color:#ffeb3b; }
+        .social-icons a { font-size:22px; margin-right:15px; }
+        .copyright { text-align:center; margin-top:60px; padding-top:30px; border-top:1px solid #333; font-size:14px; color:#666; }
+
+        .toast { position:fixed; bottom:30px; right:30px; background:#333; color:white; padding:16px 24px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.3); z-index:9999; opacity:0; transform:translateY(100px); transition:0.4s; display:flex; align-items:center; gap:10px; }
+        .toast.show { opacity:1; transform:translateY(0); }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="top-bar">Giao hàng miễn phí nội thành với đơn từ 300.000đ</div>
+        <div class="top-bar">Miễn phí giao hàng nội thành với đơn từ 300.000đ</div>
         <nav>
-            <a href="#" class="logo">Sushi<span>House</span></a>
+            <a href="Home.html" class="logo">Sushi<span>House</span></a>
             <div class="menu">
-                <a href="#">Trang chủ</a>
-                <a href="#">Sản phẩm</a>
+                <a href="Home.html">Trang chủ</a>
+                <a href="product.html">Thực đơn</a>
                 <a href="#">Khuyến mãi</a>
-                <a href="#">Tin tức</a>
                 <a href="#">Liên hệ</a>
             </div>
+
             <div class="header-right">
                 <div class="search-box">
-                    <input type="text" placeholder="Tìm kiếm món Nhật ngon...">
+                    <input type="text" placeholder="Tìm món Nhật ngon...">
                     <i class="fas fa-search"></i>
                 </div>
-                <a href="#" class="cart-icon">
+
+                <div id="userGreeting"></div>
+
+                <a href="cart.html" class="cart-icon" id="cartLink">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count" id="cartCount">0</span>
                 </a>
-                <a href="#" class="login-btn">Đăng nhập</a>
             </div>
         </nav>
     </header>
 
     <main>
         <div class="container">
-
-            <!-- BÁN CHẠY NHẤT -->
-            <h2 class="section-title">BÁN CHẠY NHẤT</h2>
+            <div class="section-title">BÁN CHẠY NHẤT</div>
             <div class="horizontal-scroll" id="bestSeller"></div>
 
-            <!-- MÓN MỚI -->
-            <h2 class="section-title">MÓN MỚI VỪA VỀ</h2>
+            <div class="section-title">MÓN MỚI VỪA VỀ</div>
             <div class="horizontal-scroll" id="newArrival"></div>
 
-            <!-- MÓN HOT TREND -->
-            <h2 class="section-title">MÓN HOT TREND</h2>
+            <div class="section-title">ĐANG HOT TRONG TUẦN</div>
             <div class="horizontal-scroll" id="trending"></div>
 
-            <!-- TIN TỨC -->
+            <!-- PHẦN TIN TỨC & BLOG -->
+            <div class="section-title" style="margin-top:120px;">Tin Tức & Ẩm Thực Nhật Bản</div>
             <div class="news-section">
-                <div class="container">
-                    <h2 class="section-title" style="color:#333;">TIN TỨC & ẨM THỰC NHẬT</h2>
-                    <div class="news-grid">
-                        <div class="news-card">
-                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop" alt="">
-                            <div class="news-info">
-                                <h3>Cách chọn cá hồi tươi ngon nhất để làm sushi tại nhà</h3>
-                                <p>Hướng dẫn chi tiết từ đầu bếp Nhật...</p>
-                            </div>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800" alt="">
+                        <div class="news-info">
+                            <div class="date">15/12/2025</div>
+                            <h3>Bí quyết chọn cá hồi Na Uy tươi ngon nhất cho sushi</h3>
+                            <p>Những mẹo nhỏ từ đầu bếp Nhật giúp bạn luôn có nguyên liệu hoàn hảo...</p>
+                            <a href="#" class="read-more">Đọc thêm</a>
                         </div>
-                        <div class="news-card">
-                            <img src="https://images.unsplash.com/photo-1607017874365-4a4249c9992c?q=80&w=800&auto=format&fit=crop" alt="">
-                            <div class="news-info">
-                                <h3>Bí quyết nấu ramen chuẩn vị trong 3 giờ</h3>
-                                <p>Công thức Tonkotsu truyền thống...</p>
-                            </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=800" alt="">
+                        <div class="news-info">
+                            <div class="date">10/12/2025</div>
+                            <h3>Lịch sử Takoyaki – Từ món ăn đường phố đến biểu tượng Osaka</h3>
+                            <p>Hành trình 90 năm của món bánh bạch tuộc nướng trứ danh...</p>
+                            <a href="#" class="read-more">Đọc thêm</a>
                         </div>
-                        <div class="news-card">
-                            <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?q=80&w=800&auto=format&fit=crop" alt="">
-                            <div class="news-info">
-                                <h3>Top 10 nhà hàng Nhật Michelin 2025</h3>
-                                <p>Những cái tên khiến cả thế giới xếp hàng...</p>
-                            </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?q=80&w=800" alt="">
+                        <div class="news-info">
+                            <div class="date">05/12/2025</div>
+                            <h3>Top 10 nhà hàng sushi được Michelin công nhận 2025</h3>
+                            <p>Những cái tên khiến thực khách toàn cầu phải xếp hàng dài...</p>
+                            <a href="#" class="read-more">Đọc thêm</a>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- Toast thông báo -->
+    <!-- FOOTER SIÊU ĐẸP -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h3>Sushi<span style="color:white;">House</span></h3>
+                <p style="line-height:1.8; font-size:15px;">
+                    Mang hương vị Nhật Bản chính gốc đến từng bữa ăn của bạn.<br>
+                    Nguyên liệu tươi mỗi ngày – Chế biến chuẩn vị Nhật.
+                </p>
+                <div class="social-icons" style="margin-top:25px;">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Khám Phá</h4>
+                <ul style="list-style:none; line-height:2.2;">
+                    <li><a href="Home.html">Trang chủ</a></li>
+                    <li><a href="product.html">Thực đơn</a></li>
+                    <li><a href="cart.html">Giỏ hàng</a></li>
+                    <li><a href="#">Khuyến mãi</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Liên Hệ</h4>
+                <p style="line-height:2;">
+                    <i class="fas fa-map-marker-alt" style="color:#c41e3a;"></i> 123 Nguyễn Văn Cừ, Q.5, TP.HCM<br>
+                    <i class="fas fa-phone" style="color:#c41e3a;"></i> 1900 1234<br>
+                    <i class="fas fa-envelope" style="color:#c41e3a;"></i> hello@sushihouse.vn<br>
+                    <i class="fas fa-clock" style="color:#c41e3a;"></i> 10:00 – 22:00 (cả tuần)
+                </p>
+            </div>
+
+            <div>
+                <h4>Theo Dõi Chúng Tôi</h4>
+                <div style="background:white; padding:15px; border-radius:12px; width:fit-content;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://sushihouse.vn" alt="QR">
+                </div>
+                <p style="margin-top:15px; font-size:14px;">Quét QR để đặt món nhanh!</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 Sushi House - Được xây dựng với tình yêu sushi
+        </div>
+    </footer>
+
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span>Đã thêm vào giỏ hàng!</span>
     </div>
 
     <script>
-        // Danh sách sản phẩm (id từ 0 đến 11)
-        const products = [
-            {name:"Sushi Cá Hồi NaUy",price:189000,oldPrice:220000,img:"https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=1000",badge:"BÁN CHẠY"},
-            {name:"Sashimi Tổng Hợp Cao Cấp",price:459000,img:"https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=1000",badge:"HOT"},
-            {name:"Ramen Tonkotsu Truyền Thống",price:149000,img:"https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=1000"},
-            {name:"Tempura Tôm Sú Chiên Xù",price:179000,oldPrice:220000,img:"https://images.unsplash.com/photo-1625937283075-a20e1a4f4a6d?q=80&w=1000",badge:"-20%"},
-            {name:"Unagi Don - Lươn Nướng Nhật",price:299000,img:"https://images.unsplash.com/photo-1634214677453-9b37885f0d9a?q=80&w=1000",badge:"NEW"},
-            {name:"Takoyaki Bạch Tuộc Nóng Hổi",price:89000,img:"https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=1000",badge:"NEW"},
-            {name:"Okonomiyaki Osaka Chính Gốc",price:169000,img:"https://images.unsplash.com/photo-1599321868243-20177e1f0315?q=80&w=1000",badge:"NEW"},
-            {name:"Dorayaki Trà Xanh Đậu Đỏ",price:79000,img:"https://images.unsplash.com/photo-1621996346565-e3ce3f971a3a?q=80&w=1000",badge:"NEW"},
-            {name:"Salmon Aburi Mentai",price:219000,img:"https://images.unsplash.com/photo-1623379914807-20a8a9e4e2d5?q=80&w=1000",badge:"TRENDING"},
-            {name:"Volcano Roll",price:239000,img:"https://images.unsplash.com/photo-1613843873231-1447db182bf7?q=80&w=1000",badge:"HOT"},
-            {name:"Katsu Curry Nhật Bản",price:179000,img:"https://images.unsplash.com/photo-1598970535080-9f9d66d4e0c5?q=80&w=1000"},
-            {name:"Mochi Kem 4 Vị",price:99000,img:"https://images.unsplash.com/photo-1623341214825-9f4f5717cbbb?q=80&w=1000",badge:"LIMITED"}
-        ];
+        // === ĐỒNG BỘ SẢN PHẨM VỚI ADMIN ===
+        let products = [];
+        function loadProducts() {
+            const saved = localStorage.getItem('products');
+            if (saved) {
+                products = JSON.parse(saved);
+            } else {
+                products = [
+                    {name:"Sushi Cá Hồi NaUy",price:189000,oldPrice:220000,img:"https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=1000",badge:"BÁN CHẠY",category:"sushi",status:"completed"},
+                    {name:"Sashimi Tổng Hợp Cao Cấp",price:459000,img:"https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=1000",badge:"HOT",category:"sashimi",status:"completed"},
+                    {name:"Ramen Tonkotsu Truyền Thống",price:149000,img:"https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=1000",category:"ramen",status:"completed"},
+                    {name:"Tempura Tôm Sú",price:179000,oldPrice:220000,img:"https://images.unsplash.com/photo-1625937283075-a20e1a4f4a6d?q=80&w=1000",badge:"-20%",category:"tempura",status:"completed"},
+                    {name:"Unagi Don - Lươn Nướng",price:299000,img:"https://images.unsplash.com/photo-1634214677453-9b37885f0d9a?q=80&w=1000",badge:"NEW",category:"rice",status:"completed"},
+                    {name:"Takoyaki Bạch Tuộc",price:89000,img:"https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=1000",category:"tempura",status:"completed"},
+                    {name:"Volcano Roll",price:239000,img:"https://images.unsplash.com/photo-1613843873231-1447db182bf7?q=80&w=1000",badge:"HOT",category:"sushi",status:"completed"},
+                    {name:"Mochi Kem 4 Vị",price:99000,img:"https://images.unsplash.com/photo-1623341214825-9f4f5717cbbb?q=80&w=1000",badge:"LIMITED",category:"dessert",status:"completed"},
+                    {name:"Salmon Aburi Mentai",price:219000,img:"https://images.unsplash.com/photo-1623379914807-20a8a9e4e2d5?q=80&w=1000",badge:"TRENDING",category:"sushi",status:"completed"},
+                    {name:"Katsu Curry Nhật Bản",price:179000,img:"https://images.unsplash.com/photo-1598970535080-9f9d66d4e0c5?q=80&w=1000",category:"rice",status:"completed"}
+                ];
+                localStorage.setItem('products', JSON.stringify(products));
+            }
+        }
+        loadProducts();
 
-        // Hàm định dạng giá
         const f = p => p.toLocaleString('vi-VN') + 'đ';
 
-        // Tạo card + link + thêm giỏ
         const createCard = (p, id) => {
+            if (p.status !== 'completed') return '';
             const old = p.oldPrice ? `<span class="old-price">${f(p.oldPrice)}</span>` : '';
             const badge = p.badge ? `<div class="badge">${p.badge}</div>` : '';
             return `
@@ -214,13 +250,19 @@
             `;
         };
 
-        // Chuyển trang chi tiết
-        function goToDetail(id) {
-            window.location.href = `productDetail.html?id=${id}`;
+        function goToDetail(id) { window.location.href = `productDetail.html?id=${id}`; }
+
+        function requireLogin() {
+            if (!localStorage.getItem('currentUser')) {
+                alert('Vui lòng đăng nhập để mua hàng!');
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
         }
 
-        // Thêm vào giỏ
         function addToCart(id) {
+            if (!requireLogin()) return;
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
             const item = cart.find(x => x.id === id);
             if (item) item.qty += 1;
@@ -228,27 +270,49 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
 
-            // Toast đẹp
             const toast = document.getElementById('toast');
             toast.querySelector('span').textContent = `Đã thêm "${products[id].name}" vào giỏ!`;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Cập nhật số lượng giỏ
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const total = cart.reduce((sum, item) => sum + item.qty, 0);
+            const total = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
             document.getElementById('cartCount').textContent = total;
         }
+
+        document.getElementById('cartLink').addEventListener('click', function(e) {
+            if (!localStorage.getItem('currentUser')) {
+                e.preventDefault();
+                alert('Vui lòng đăng nhập để xem giỏ hàng!');
+                window.location.href = 'login.html';
+            }
+        });
 
         // Render sản phẩm
         document.getElementById('bestSeller').innerHTML = products.slice(0,4).map((p,i)=>createCard(p,i)).join('');
         document.getElementById('newArrival').innerHTML = products.slice(4,8).map((p,i)=>createCard(p,i+4)).join('');
         document.getElementById('trending').innerHTML = products.slice(8,12).map((p,i)=>createCard(p,i+8)).join('');
-
-        // Khởi tạo số lượng giỏ khi load trang
         updateCartCount();
+
+        // Hiển thị tên người dùng + đăng xuất
+        const currentUser = localStorage.getItem('currentUser');
+        const greetingDiv = document.getElementById('userGreeting');
+        if (currentUser) {
+            greetingDiv.innerHTML = `<span style="color:white; font-weight:500;">Xin chào, <strong>${currentUser}</strong> 
+                <a href="#" onclick="logout()" style="color:#ffeb3b; margin-left:10px; font-size:14px;">[Đăng xuất]</a></span>`;
+        } else {
+            greetingDiv.innerHTML = `<a href="login.html" class="login-btn">Đăng nhập</a>`;
+        }
+
+        function logout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('cart');
+                location.reload();
+            }
+        }
     </script>
 </body>
 </html>

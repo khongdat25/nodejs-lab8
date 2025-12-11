@@ -3,195 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Giỏ Hàng</title>
+    <title>Giỏ Hàng - Sushi House</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background:#fdfafa;
+            padding-top: 90px;
         }
         header {
-            background-color: #c41e3a; /* Red header similar to the image */
-            color: white;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background:#c41e3a;
+            color:white;
+            position:fixed;
+            top:0; width:100%; z-index:1000;
+            padding:15px 5%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 2px 15px rgba(0,0,0,0.1);
         }
         .back-button {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
+            color:white; text-decoration:none; font-size:500 16px Arial;
+            display:flex; align-items:center;
         }
-        .back-button::before {
-            content: '\2190'; /* Left arrow */
-            margin-right: 5px;
-        }
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-        }
+        .back-button::before { content:'←'; margin-right:8px; }
+        .logo { font-size:24px; font-weight:bold; color:white; text-decoration:none; }
+        .logo span { color:#ffeb3b; }
+
         .main-container {
-            display: flex;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
+            max-width:1200px; margin:30px auto; padding:0 20px;
+            display:grid; grid-template-columns:1fr 380px; gap:30px;
         }
         .cart-items {
-            flex: 3;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            margin-right: 20px;
+            background:white; border-radius:16px; padding:30px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.08);
+        }
+        .cart-items h2 {
+            color:#c41e3a; margin-bottom:25px; font-size:26px;
         }
         .cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 20px;
+            display:flex; align-items:center; padding:20px 0;
+            border-bottom:1px solid #eee;
         }
+        .cart-item:last-child { border-bottom:none; }
         .cart-item img {
-            width: 100px;
-            height: auto;
-            border-radius: 8px;
-            margin-right: 20px;
+            width:100px; height:100px; object-fit:cover; border-radius:12px; margin-right:20px;
         }
-        .item-details {
-            flex: 1;
-        }
-        .item-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-        .item-price {
-            color: #c41e3a;
-            font-size: 16px;
-            margin: 10px 0;
-        }
+        .item-name { font-weight:600; font-size:18px; margin-bottom:8px; }
+        .item-price { color:#c41e3a; font-weight:bold; font-size:17px; }
         .quantity {
-            display: flex;
-            align-items: center;
+            display:flex; align-items:center; margin-top:10px;
         }
         .quantity button {
-            background-color: #c41e3a;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-size: 18px;
-            margin: 0 10px;
+            width:36px; height:36px; background:#c41e3a; color:white;
+            border:none; border-radius:50%; font-size:20px; cursor:pointer;
         }
         .quantity input {
-            width: 40px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px;
+            width:50px; text-align:center; margin:0 12px; padding:8px;
+            border:2px solid #ddd; border-radius:8px; font-size:16px;
         }
+
         .sidebar {
-            flex: 1;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background:white; border-radius:16px; padding:30px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.08); height:fit-content;
         }
         .sidebar h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
+            color:#c41e3a; font-size:22px; margin-bottom:20px; text-align:center;
         }
         .price-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: #333;
+            display:flex; justify-content:space-between; padding:12px 0;
+            font-size:16px;
         }
-        .total {
-            font-weight: bold;
-            font-size: 18px;
-            color: #c41e3a;
+        .price-info.total {
+            font-size:20px; font-weight:bold; color:#c41e3a;
+            padding-top:20px; border-top:2px solid #eee;
         }
         .checkout-button {
-            width: 100%;
-            padding: 12px;
-            background-color: #c41e3a;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 20px;
+            width:100%; padding:18px; background:#c41e3a; color:white;
+            border:none; border-radius:50px; font-size:20px; font-weight:bold;
+            cursor:pointer; margin-top:25px; transition:0.3s;
         }
-        .checkout-button:hover {
-            background-color: #a51b30;
+        .checkout-button:hover { background:#a1172d; }
+        .checkout-button:disabled {
+            background:#ccc; cursor:not-allowed;
+        }
+
+        @media (max-width:992px) {
+            .main-container { grid-template-columns:1fr; }
         }
     </style>
 </head>
 <body>
+
     <header>
-        <a href="#" class="back-button">Quay lại trang chủ</a>
-        <div class="logo">SushiHouse</div>
-        <div></div> <!-- Placeholder for balance or other elements -->
+        <a href="Home.html" class="back-button">Quay lại trang chủ</a>
+        <a href="Home.html" class="logo">Sushi<span>House</span></a>
+        <div></div>
     </header>
+
     <div class="main-container">
+        <!-- Danh sách món -->
         <div class="cart-items">
             <h2>Giỏ Hàng Của Bạn</h2>
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/100?text=Salmon+Aburi" alt="Salmon Aburi Mentai">
-                <div class="item-details">
-                    <div class="item-name">Salmon Aburi Mentai</div>
-                    <div class="item-price">219.000đ</div>
-                    <div class="quantity">
-                        <button>-</button>
-                        <input type="number" value="1" min="1">
-                        <button>+</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Add more items as needed -->
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/100?text=Sushi+Roll" alt="Sushi Roll">
-                <div class="item-details">
-                    <div class="item-name">Sushi Roll</div>
-                    <div class="item-price">150.000đ</div>
-                    <div class="quantity">
-                        <button>-</button>
-                        <input type="number" value="2" min="1">
-                        <button>+</button>
-                    </div>
-                </div>
+            <div id="cartList">
+                <!-- Render động bằng JS -->
             </div>
         </div>
+
+        <!-- Tóm tắt đơn hàng -->
         <div class="sidebar">
             <h3>Thông Tin Đơn Hàng</h3>
             <div class="price-info">
-                <span>Tạm tính:</span>
-                <span>519.000đ</span>
-            </div>
-            <div class="price-info">
-                <span>Giảm giá:</span>
-                <span>-20.000đ</span>
+                <span>Tạm tính (<span id="itemCount">0</span> món):</span>
+                <span id="subtotal">0đ</span>
             </div>
             <div class="price-info">
                 <span>Phí vận chuyển:</span>
-                <span>30.000đ</span>
+                <span id="shipping">30.000đ</span>
             </div>
-            <hr>
             <div class="price-info total">
                 <span>Tổng cộng:</span>
-                <span>529.000đ</span>
+                <span id="total">0đ</span>
             </div>
-            <button class="checkout-button">Thanh Toán</button>
+
+            <button class="checkout-button" id="checkoutBtn">
+                TIẾP TỤC THANH TOÁN
+            </button>
         </div>
     </div>
+
+    <script>
+        // Lấy giỏ hàng từ localStorage
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const container = document.getElementById('cartList');
+            let subtotal = 0;
+            let totalQty = 0;
+
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; padding:40px 0;">Giỏ hàng trống. Hãy thêm món ngon nào!</p>';
+                document.getElementById('checkoutBtn').disabled = true;
+                updateSummary(0);
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const qty = item.qty || item.quantity || 1;
+                const price = Number(item.price) || 0;
+                subtotal += price * qty;
+                totalQty += qty;
+
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">${price.toLocaleString('vi-VN')}đ</div>
+                        <div class="quantity">
+                            <button onclick="updateQty(${index}, -1)">−</button>
+                            <input type="text" value="${qty}" readonly>
+                            <button onclick="updateQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.querySelector('.cart-items h2').textContent = `Giỏ Hàng Của Bạn (${totalQty} món)`;
+            updateSummary(subtotal);
+            document.getElementById('checkoutBtn').disabled = false;
+        }
+
+        function updateSummary(subtotal) {
+            document.getElementById('subtotal').textContent = subtotal.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('itemCount').textContent = 
+                document.querySelectorAll('.cart-item').length;
+
+            const shipping = subtotal > 0 ? 30000 : 0;
+            const total = subtotal + shipping;
+
+            document.getElementById('shipping').textContent = shipping.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('total').textContent = total.toLocaleString('vi-VN') + 'đ';
+        }
+
+        // Cộng trừ số lượng
+        function updateQty(index, change) {
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart[index].qty = (cart[index].qty || 1) + change;
+            if (cart[index].qty < 1) cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+
+        // Nút Thanh Toán → Chuyển sang trang pay.html
+        document.getElementById('checkoutBtn').addEventListener('click', function() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            if (cart.length === 0) {
+                alert('Giỏ hàng trống!');
+                return;
+            }
+            window.location.href = 'pay.html';
+        });
+
+        // Load giỏ khi mở trang
+        window.onload = loadCart;
+        // Kiểm tra đăng nhập ngay khi vào trang giỏ hàng
+if (!localStorage.getItem('currentUser')) {
+    alert('Vui lòng đăng nhập để xem giỏ hàng!');
+    window.location.href = 'login.html';
+}
+    </script>
 </body>
 </html>

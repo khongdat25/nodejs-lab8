@@ -344,50 +344,73 @@
     </main>
 
     <script>
-        // Dữ liệu mẫu 20 món
-        const products = [
-            { name: "Salmon Aburi Mentai", price: 219000, oldPrice: 280000, img: "https://images.unsplash.com/photo-1623379914807-20a8a9e4e2d5?q=80&w=800", badge: "HOT" },
-            { name: "Sashimi Tổng Hợp Cao Cấp", price: 459000, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=800" },
-            { name: "Ramen Tonkotsu Truyền Thống", price: 149000, img: "https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=800" },
-            { name: "Unagi Don - Lươn Nướng", price: 299000, img: "https://images.unsplash.com/photo-1634214677453-9b37885f0d9a?q=80&w=800", badge: "NEW" },
-            { name: "Volcano Roll", price: 239000, img: "https://images.unsplash.com/photo-1613843873231-1447db182bf7?q=80&w=800", badge: "BÁN CHẠY" },
-            { name: "Takoyaki Bạch Tuộc", price: 89000, img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=800" },
-            { name: "Tempura Tôm Sú", price: 179000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1625937283075-a20e1a4f4a6d?q=80&w=800", badge: "-20%" },
-            { name: "Mochi Kem 4 Vị", price: 99000, img: "https://images.unsplash.com/photo-1623341214825-9f4f5717cbbb?q=80&w=800", badge: "LIMITED" },
-            { name: "Katsu Curry Nhật Bản", price: 179000, img: "https://images.unsplash.com/photo-1598970535080-9f9d66d4e0c5?q=80&w=800" },
-            { name: "Sushi Cá Hồi NaUy", price: 189000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800" },
-            // Thêm bao nhiêu món cũng được...
-        ];
+       // Dữ liệu mẫu 20 món với thêm category
+const products = [
+    { name: "Salmon Aburi Mentai", price: 219000, oldPrice: 280000, img: "https://images.unsplash.com/photo-1623379914807-20a8a9e4e2d5?q=80&w=800", badge: "HOT", category: "sushi" },
+    { name: "Sashimi Tổng Hợp Cao Cấp", price: 459000, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=800", category: "sashimi" },
+    { name: "Ramen Tonkotsu Truyền Thống", price: 149000, img: "https://images.unsplash.com/photo-1607305387299-a3d9611cd469?q=80&w=800", category: "ramen" },
+    { name: "Unagi Don - Lươn Nướng", price: 299000, img: "https://images.unsplash.com/photo-1634214677453-9b37885f0d9a?q=80&w=800", badge: "NEW", category: "rice" },
+    { name: "Volcano Roll", price: 239000, img: "https://images.unsplash.com/photo-1613843873231-1447db182bf7?q=80&w=800", badge: "BÁN CHẠY", category: "sushi" },
+    { name: "Takoyaki Bạch Tuộc", price: 89000, img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=800", category: "tempura" },
+    { name: "Tempura Tôm Sú", price: 179000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1625937283075-a20e1a4f4a6d?q=80&w=800", badge: "-20%", category: "tempura" },
+    { name: "Mochi Kem 4 Vị", price: 99000, img: "https://images.unsplash.com/photo-1623341214825-9f4f5717cbbb?q=80&w=800", badge: "LIMITED", category: "dessert" },
+    { name: "Katsu Curry Nhật Bản", price: 179000, img: "https://images.unsplash.com/photo-1598970535080-9f9d66d4e0c5?q=80&w=800", category: "rice" },
+    { name: "Sushi Cá Hồi NaUy", price: 189000, oldPrice: 220000, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800", category: "sushi" },
+    // Thêm bao nhiêu món cũng được... (hãy bổ sung category tương ứng nếu thêm sản phẩm mới)
+];
 
-        const formatPrice = (p) => p.toLocaleString('vi-VN') + 'đ';
+const formatPrice = (p) => p.toLocaleString('vi-VN') + 'đ';
 
-        const createCard = (p) => {
-            const oldPrice = p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : '';
-            const badge = p.badge ? `<div class="badge">${p.badge}</div>` : '';
-            return `
-                <div class="product-card">
-                    ${badge}
-                    <div class="product-img">
-                        <img src="${p.img}" alt="${p.name}">
-                    </div>
-                    <div class="product-info">
-                        <h3>${p.name}</h3>
-                        <p class="price">${formatPrice(p.price)} ${oldPrice}</p>
-                        <button class="btn-add">Thêm vào giỏ</button>
-                    </div>
-                </div>
-            `;
-        };
+const createCard = (p) => {
+    const oldPrice = p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : '';
+    const badge = p.badge ? `<div class="badge">${p.badge}</div>` : '';
+    return `
+        <div class="product-card">
+            ${badge}
+            <div class="product-img">
+                <img src="${p.img}" alt="${p.name}">
+            </div>
+            <div class="product-info">
+                <h3>${p.name}</h3>
+                <p class="price">${formatPrice(p.price)} ${oldPrice}</p>
+                <button class="btn-add">Thêm vào giỏ</button>
+            </div>
+        </div>
+    `;
+};
 
-        // Render tất cả sản phẩm
-        document.getElementById('productsGrid').innerHTML = products.map(createCard).join('');
+// Hàm lọc sản phẩm tổng quát (tìm kiếm + danh mục)
+function filterProducts() {
+    const term = document.getElementById('searchInput').value.toLowerCase();
+    const selectedCategories = Array.from(document.querySelectorAll('.category-list input:checked')).map(cb => cb.value);
 
-        // Tìm kiếm nhanh
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-            document.getElementById('productsGrid').innerHTML = filtered.map(createCard).join('');
-        });
+    let filtered = products;
+
+    // Lọc theo tìm kiếm
+    if (term) {
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(term));
+    }
+
+    // Lọc theo danh mục (nếu có chọn)
+    if (selectedCategories.length > 0) {
+        filtered = filtered.filter(p => selectedCategories.includes(p.category));
+    }
+
+    // Render lại grid
+    document.getElementById('productsGrid').innerHTML = filtered.map(createCard).join('');
+}
+
+// Render tất cả sản phẩm ban đầu
+filterProducts();
+
+// Lắng nghe sự kiện tìm kiếm
+document.getElementById('searchInput').addEventListener('input', filterProducts);
+
+// Lắng nghe sự kiện checkbox danh mục
+const checkboxes = document.querySelectorAll('.category-list input[type="checkbox"]');
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', filterProducts);
+});
     </script>
 </body>
 </html>
